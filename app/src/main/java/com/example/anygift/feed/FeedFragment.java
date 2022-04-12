@@ -53,18 +53,18 @@ public class FeedFragment extends Fragment {
         adapter = new MyAdapter();
         list.setAdapter(adapter);
         nameTv = view.findViewById(R.id.cards_list_user_name_tv);
-        nameTv.setText("Hello " + Model.instance.getSignedUser().getName() +" and welcome to the gift card trading platform. Find evry gift card buy or trade with your own cards.");
+        nameTv.setText("Hello " + Model.instance.getSignedUser().getFirstName() +" and welcome to the gift card trading platform. Find evry gift card buy or trade with your own cards.");
         adapter.setOnItemClickListener(new FeedFragment.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                double val = viewModel.getList().getValue().get(position).getValue();
-                String id = viewModel.getList().getValue().get(position).getId();
+                double val = viewModel.getList().get(position).getValue();
+                String id = viewModel.getList().get(position).getId();
                 Log.d("TAG", "Gift card in value of: " + val);
                 Navigation.findNavController(v).navigate(FeedFragmentDirections.actionFeedFragmentToCardsDetailsFragment(id));
             }
         });
         setHasOptionsMenu(true);
-        viewModel.getList().observe(getViewLifecycleOwner(), list1 -> refresh());
+//        viewModel.getList().observe(getViewLifecycleOwner(), list1 -> refresh());
         swipeRefresh.setRefreshing(Model.instance.getListLoadingState().getValue() == Model.GiftListLoadingState.loading);
         Model.instance.getListLoadingState().observe(getViewLifecycleOwner(), ListLoadingState -> {
             if (ListLoadingState == Model.GiftListLoadingState.loading) {
@@ -103,15 +103,10 @@ public class FeedFragment extends Fragment {
         }
 
         public void bindView(int position) {
-            if (!Objects.requireNonNull(viewModel.getList().getValue()).get(position).getDeleted()) {
-                cardValue.setText(String.valueOf(viewModel.getList().getValue().get(position).getValue()));
-                Picasso.get().load(viewModel.getList().getValue().get(position).getGiftCardImageUrl()).into(cardImage);
+                cardValue.setText(String.valueOf(viewModel.getList().get(position).getValue()));
+//                Picasso.get().load(viewModel.getList().get(position).getCardType()).into(cardImage);
                 this.position = position;
-            } else {
-                cardValue.setVisibility(View.GONE);
-                cardImage.setVisibility(View.GONE);
-                cardValTag.setVisibility(View.GONE);
-            }
+
         }
     }
 
@@ -155,9 +150,9 @@ public class FeedFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            if (viewModel.getList().getValue() == null)
+            if (viewModel.getList() == null)
                 return 0;
-            return viewModel.getList().getValue().size();
+            return viewModel.getList().size();
         }
     }
 }

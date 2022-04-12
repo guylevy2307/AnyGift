@@ -31,12 +31,14 @@ public class Model {
     public Executor executor = Executors.newFixedThreadPool(1);
     public Handler mainThread = HandlerCompat.createAsync(Looper.getMainLooper());
     public User signedUser;
+    public LoginResult signedUser_new;
     public ModelRetrofit modelRetrofit = new ModelRetrofit();
     public MutableLiveData<List<GiftCard>> giftCardsList = new MutableLiveData<>();
     public List<Category> categories = new ArrayList<>();
 
     private Model() {
         signedUser = new User();
+        signedUser_new = new LoginResult();
         ListLoadingState.setValue(GiftListLoadingState.loaded);
     }
 
@@ -285,8 +287,8 @@ public class Model {
         return modelFirebase.isSignedIn();
     }
 
-    public User getSignedUser() {
-        return signedUser;
+    public LoginResult getSignedUser() {
+        return signedUser_new;
     }
 
     public void setCurrentUser(GetUserListener listener) {

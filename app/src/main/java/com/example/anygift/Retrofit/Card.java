@@ -7,6 +7,9 @@ import java.util.HashMap;
 
 public class Card {
 
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("price")
     @Expose
     private Double price;
@@ -43,6 +46,14 @@ public class Card {
     @SerializedName("isDeleted")
     @Expose
     private Boolean isDeleted;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Double getPrice() {
         return price;
@@ -157,7 +168,8 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" +
-                "price=" + price +
+                "id='" + id + '\'' +
+                ", price=" + price +
                 ", value=" + value +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", expirationDate=" + expirationDate +

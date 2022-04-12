@@ -40,11 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("111111111111");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        System.out.println("22222222222222");
         NavHost navHost = (NavHost) getSupportFragmentManager().findFragmentById(R.id.main_navhost);
+        System.out.println("44444444444444444");
         navCtr = navHost.getNavController();
+        System.out.println("555555555555555555");
         viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
 
 
@@ -114,14 +117,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setMenuHeader() {
+        System.out.println(Model.instance.getSignedUser());
         View header= (View)navigationView.getHeaderView(0);
         nameTv = header.findViewById(R.id.menu_header_name_tv);
         emailTv = header.findViewById(R.id.menu_header_email_tv);
         imageIv = header.findViewById(R.id.menu_header_image_iv);
-        nameTv.setText(  Model.instance.getSignedUser().getName());
+        nameTv.setText(  Model.instance.getSignedUser().getFirstName() + " " + Model.instance.getSignedUser().getLastName());
         emailTv.setText( Model.instance.getSignedUser().getEmail());
-        if( Model.instance.getSignedUser().getImageUrl().compareTo("")!=0){
-            Picasso.get().load(Model.instance.getSignedUser().getImageUrl()).into(imageIv);
+        if( Model.instance.getSignedUser().getProfilePicture().compareTo("")!=0){
+            Picasso.get().load(Model.instance.getSignedUser().getProfilePicture()).into(imageIv);
         }
     }
 

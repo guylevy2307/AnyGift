@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.anygift.R;
+import com.example.anygift.Retrofit.LoginResult;
 import com.example.anygift.model.Model;
 import com.example.anygift.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -97,14 +98,14 @@ public class MyCardsFragment extends Fragment {
     }
 
     private void setUserUI() {
-        User user = Model.instance.getSignedUser();
+        LoginResult user = Model.instance.getSignedUser();
 
-        userName.setText(user.getName());
+        userName.setText(user.getFirstName() + " " + user.getLastName());
         userEmail.setText(user.getEmail());
         userPhone.setText(user.getPhone());
         userAddress.setText(user.getAddress());
-        if (user.getImageUrl() != null) {
-            Picasso.get().load(user.getImageUrl()).into(userImage);
+        if (user.getProfilePicture() != null) {
+            Picasso.get().load(user.getProfilePicture()).into(userImage);
             userImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             userImage.setClipToOutline(true);
         }

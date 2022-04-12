@@ -68,7 +68,6 @@ public class LoginFragment extends Fragment {
         forgotP_btn.setTypeface(Typeface.SANS_SERIF);
 
         signIn_btn.setOnClickListener(v -> {
-//            login();
             checkUser();
         });
 
@@ -91,6 +90,14 @@ public class LoginFragment extends Fragment {
                 //use this loginResult
                 if (loginResult == null)
                     Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                else{
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                    Model.instance.signedUser_new = loginResult;
+                    Log.d("TAG", "login successful");
+                    goToFeedActivity();
+                   // Navigation.findNavController(view).navigate(R.id.action_global_feedFragment);
+
+                }
             }
         });
     }
@@ -108,42 +115,38 @@ public class LoginFragment extends Fragment {
         }
         //connect via http request
         pb.setVisibility(View.VISIBLE);
-        // login();
+        login();
 
-        mAuth.signInWithEmailAndPassword(email_user, password_user).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    signIn_btn.setEnabled(false);
-                    signUp_btn.setEnabled(false);
-                    forgotP_btn.setEnabled(false);
-                    pb.setVisibility(View.INVISIBLE);
-                    mySnackbar = Snackbar.make(view, "Login successful :)", BaseTransientBottomBar.LENGTH_LONG);
-                    mySnackbar.show();
-                    Log.d("TAG", "login successful");
-                    goToFeedActivity();
-                   // Navigation.findNavController(view).navigate(R.id.action_global_feedFragment);
-                } else
-                    //Log.d("TAG","Login failed");
-                    Toast.makeText(getContext(), "Error! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                pb.setVisibility(View.INVISIBLE);
-            }
-        });
+//        mAuth.signInWithEmailAndPassword(email_user, password_user).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if (task.isSuccessful()) {
+//                    signIn_btn.setEnabled(false);
+//                    signUp_btn.setEnabled(false);
+//                    forgotP_btn.setEnabled(false);
+//                    pb.setVisibility(View.INVISIBLE);
+//                    mySnackbar = Snackbar.make(view, "Login successful :)", BaseTransientBottomBar.LENGTH_LONG);
+//                    mySnackbar.show();
+//                    Log.d("TAG", "login successful");
+//                    goToFeedActivity();
+//                   // Navigation.findNavController(view).navigate(R.id.action_global_feedFragment);
+//                } else
+//                    //Log.d("TAG","Login failed");
+//                    Toast.makeText(getContext(), "Error! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+//                pb.setVisibility(View.INVISIBLE);
+//            }
+//        });
 
 
     }
 
     public void goToFeedActivity(){
-        Model.instance.setCurrentUser(new Model.GetUserListener() {
-            @Override
-            public void onComplete(User user) {
                 pb.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();
-            }
-        });
-    }
+    };
+
     public void forgotPassword() {
         email_user = email.getText().toString();
         mAuth.sendPasswordResetEmail(email_user).addOnCompleteListener(new OnCompleteListener<Void>() {

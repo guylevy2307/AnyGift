@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 
 import com.example.anygift.R;
+import com.example.anygift.Retrofit.Card;
 import com.example.anygift.model.GiftCard;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,11 +36,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         locationArrayList = new ArrayList<>();
         gcNames = new ArrayList<>();
-        for (GiftCard gc : viewModel.getList().getValue()) {
-            String[] cordinates = gc.getLatAndLong().split(",");
-            locationArrayList.add(new LatLng(Double.parseDouble(cordinates[0]), Double.parseDouble(cordinates[1])));
-            gcNames.add("belong to:" + gc.getOwnerEmail());
-        }
+//        for (Card gc : viewModel.getList()) {
+//            String[] cordinates = gc.getLatAndLong().split(",");
+//            locationArrayList.add(new LatLng(Double.parseDouble(cordinates[0]), Double.parseDouble(cordinates[1])));
+//            gcNames.add("belong to:" + gc.getOwnerEmail());
+//        }
 
     }
 
